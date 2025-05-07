@@ -1,0 +1,34 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: debezium/postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
+    volumes:
+      - ./docker/postgres/init_db:/docker-entrypoint-initdb.d
+      - ./docker/postgres/volumes/data:/var/lib/postgresql/data
+    networks:
+      - lexuancong-network
+    
+
+  demo:
+    build: ./
+    container_name: demo
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    networks:
+      - lexuancong-network  # Sửa tên mạng cho đúng
+
+networks:
+  lexuancong-network:
+    driver: bridge  # Đảm bảo tên mạng khớp ở đây
+    name: lexuancong-network
+
+
