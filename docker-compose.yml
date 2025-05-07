@@ -24,11 +24,11 @@ services:
     depends_on:
       - postgres
     networks:
-      - lexuancong-network  # Sửa tên mạng cho đúng
+      - lexuancong-network  
 
 networks:
   lexuancong-network:
-    driver: bridge  # Đảm bảo tên mạng khớp ở đây
+    driver: bridge  
     name: lexuancong-network
 
 
